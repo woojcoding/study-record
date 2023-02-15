@@ -127,6 +127,88 @@ IP는 변경될 수 있다.
 </div>
 </details>
 
+<details>
+<summary> URI와 웹 브라우저 요청 흐름</summary>
+<div markdown="1">
+
+## 1. URI(Uniform Resource Identifier)
+
+## URI
+- Uniform : 리소스 식별하는 통일된 방식
+- Resource : 자원, URI로 식별할 수 있는 모든 것(제한 없음)
+- Identifier : 다른 항목과 구분하는데 필요한 정보
+-  URL, URN ⊂  URI
+- URL : Uniform Resource Locator
+- URN : Uniform Resource Name
+
+## URL, URN
+- URL : 리소스의 위치를 지정
+- URN : 리소스의 이름을 부여
+- 위치는 변할 수 있지만 이름은 변하지 않는다.
+- URN 이름만으로 실제 리소스를 찾을 수 있는 방법은 보편화 되지 않았다.
+
+## URL 문법
+
+scheme://[userinfo@]host[:port][/path][?query][#fragment]  
+
+https://www.google.com:443/search?q=hello&hl-ko 
+
+- 프로토콜(https)
+- 호스트명(www.google.com)
+- 포트번호(443)
+- 패스(/search)
+- 쿼리파라미터(q=hello&hl=ko)
+
+### scheme
+- 주로 프로토콜 사용
+- 프로토콜 : 어떤 방식으로 자원에 접근할 것인가에 대한 클라이언트와 서버와의 규칙 ex) http, https, ftp 등
+- http는 80 포트, https는 443 포트를 주로 사용하며 포트는 생략 가능하다
+- https는 http에 보안을 추가한 것이다.
+
+### userinfo
+- URL에 사용자 정보를 포함하여 인증해야 할 떄 사용
+- 거의 사용하지 않음
+
+### host
+- 호스트명
+- 도메인명 또는 IP 주소를 직접 사용가능
+
+### PORT
+- 포트
+- 접속포트
+- 일반적으로 생략, HTTP는 80, HTTPS는 443 포트
+
+### path
+- 리소스의 경로, 계층적 구조
+- /members/100
+
+### query
+- key=value 형태
+- ?로 시작, &로 추가가능 ?keyA=valueA&keyB=valueB
+- query parameter, query string 등으로 불리며 웹서버에 문자형태로 제공하는 파라미터이다.
+### fragment
+- fragment
+- html 내부 북마크 등에 사용
+- 서버에 전송하는 정보는 아니다.
+
+## 2. 웹 브라우저 요청 흐름
+https://www.google.com:443/search?q=hello&hl-ko
+
+1. DNS 조회 -> www.google.com:443 -> IP : 200.200.200.2
+2. 웹브라우저가 HTTP 요청 메시지 생성  
+    GET /search?q=hello&hl-ko HTTP/1.1   
+    HOST: www.google.com
+3. SOCKET 라이브러리를 통해 OS 계층에 있는 TCP/IP에 전달  
+   1) IP와 PORT를 찾았으니 3 way handshake를 통해 구글서버와 연결
+   2) TCP/IP에 데이터 전달
+4. TCP/IP 패킷 생성, HTTP 메시지 포함
+5. 네트워크 인터페이스로 전달
+6. 인터넷을 통해 서버로 요청 패킷 전달
+7. 구글 서버에서 TCP/IP 패킷, HTTP 응답 메시지를 포함한 응답 패킷 반환
+8. 웹 브라우저 HTML 렌더링
+</div>
+</details>
+
 
 
 
